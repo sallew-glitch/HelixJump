@@ -28,8 +28,6 @@ public class HelixRotator : MonoBehaviour
                 float xDeltaPos = Input.GetTouch(0).deltaPosition.x;
                 transform.Rotate(transform.position.x, -xDeltaPos * rotationSpeedAndroid * Time.deltaTime, transform.position.z);
             }
-
-        print("This is android");
 #endif
     }
 }

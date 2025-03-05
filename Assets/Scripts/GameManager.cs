@@ -69,6 +69,8 @@ public class GameManager : MonoBehaviour
 
         currentLevelText.text = currentLevelIndex.ToString();
         nextLevelText.text = (currentLevelIndex + 1).ToString();
+
+        //CoinsManager.instance.SpinCoins();
     }
 
     public void ringPassed()
