@@ -571,7 +571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: Mistake
+  - name: Game Over
     clip: {fileID: 8300000, guid: 58f15820f1cedee4bb47b3162a0ac4af, type: 3}
     volume: 1
     pitch: 1
@@ -595,8 +595,14 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: Mistake 1
+  - name: Mistake
     clip: {fileID: 8300000, guid: 2c864e2cb68e2cf479808ae2781005f8, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Coin Pick
+    clip: {fileID: 8300000, guid: 21daf3ee2f8665544ac7f6795f2c330a, type: 3}
     volume: 1
     pitch: 1
     loop: 0
@@ -3297,7 +3303,7 @@ GameObject:
   - component: {fileID: 1494065475}
   m_Layer: 0
   m_Name: HelixManager
-  m_TagString: Untagged
+  m_TagString: HelixManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3637,6 +3643,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1636074407}
   m_CullTransparentMesh: 1
+--- !u!1 &1660552288
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1660552290}
+  - component: {fileID: 1660552289}
+  m_Layer: 0
+  m_Name: CoinsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1660552289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660552288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaba2b70263be12469431b6a512d443d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 180
+  coin: {fileID: 100000, guid: b9565bd62bf9df84aa6c44e1b5cb67b0, type: 3}
+--- !u!4 &1660552290
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660552288}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.4735775, y: -11.332211, z: 4.094212}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1682669542
 GameObject:
   m_ObjectHideFlags: 0
