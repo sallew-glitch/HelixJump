@@ -117,6 +117,7 @@ public class GameManager : MonoBehaviour
     public void Win() 
     {
         levelWinPanel.SetActive(true);
+        levelWin = true;
         audioManager.Play("LevelWin");
         if (Input.GetMouseButton(1))
         {
