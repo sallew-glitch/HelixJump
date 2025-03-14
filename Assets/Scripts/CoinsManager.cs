@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class CoinsManager : MonoBehaviour
@@ -10,7 +11,9 @@ public class CoinsManager : MonoBehaviour
     public float rotationSpeed = 45f;
 
     private int score = 0;
-    
+
+    public TextMeshProUGUI scoreText;
+
     public GameObject coin;
 
     // Start is called before the first frame update
@@ -101,5 +104,6 @@ public class CoinsManager : MonoBehaviour
     {
         score++; // Increase counter
         Debug.Log("Coins Collected: " + score);
+        scoreText.text = score.ToString();
     }
 }
