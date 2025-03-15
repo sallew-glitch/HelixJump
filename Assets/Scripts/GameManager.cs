@@ -119,11 +119,12 @@ public class GameManager : MonoBehaviour
         levelWinPanel.SetActive(true);
         levelWin = true;
         audioManager.Play("LevelWin");
-        if (Input.GetMouseButton(1))
-        {
-            PlayerPrefs.SetInt("CurrentLevelIndex", currentLevelIndex + 1);
-            SceneManager.LoadScene(1);
-        }
+    }
+
+    public void NextLevel()
+    {
+        PlayerPrefs.SetInt("CurrentLevelIndex", currentLevelIndex + 1);
+        SceneManager.LoadScene(1);
     }
 
     private void GameOver()
