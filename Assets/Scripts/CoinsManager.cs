@@ -31,6 +31,32 @@ public class CoinsManager : MonoBehaviour
         }
     }
 
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.buildIndex == 1) // Assuming your game scene index is 1
+        {
+            ResetScore();
+        }
+    }
+
+    void ResetScore()
+    {
+        score = 0;
+        if (scoreText != null)
+        {
+            scoreText.text = score.ToString();
+        }
+    }
 
 
     // Update is called once per frame
