@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CoinsManager : MonoBehaviour
 {
@@ -30,10 +31,17 @@ public class CoinsManager : MonoBehaviour
         }
     }
 
+
+
     // Update is called once per frame
     void Update()
     {
         SpinCoins();
+
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            scoreText = GameObject.FindGameObjectWithTag("Canvas").transform.Find("CoinPanel/txt").GetComponent<TextMeshProUGUI>();
+        }
     }
 
     public void SpawnCoins(GameObject newRing, float yPos)
