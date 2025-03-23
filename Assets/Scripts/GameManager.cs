@@ -52,6 +52,19 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         noOfPassingRings = 0;
+        mute = PlayerPrefs.GetInt("Mute") == 1 ? true : false;
+
+        Debug.Log("mute : " + mute);
+
+        if (mute)
+        {
+            volume.sprite = muted;
+        }
+        else
+        {
+            volume.sprite = unmuted;
+        }
+
         gameOver = false;
         levelWin = false;
         currentLives = 3;
@@ -69,8 +82,6 @@ public class GameManager : MonoBehaviour
 
         currentLevelText.text = currentLevelIndex.ToString();
         nextLevelText.text = (currentLevelIndex + 1).ToString();
-
-        //CoinsManager.instance.SpinCoins();
     }
 
     public void ringPassed()
@@ -170,6 +181,10 @@ public class GameManager : MonoBehaviour
         AudioListener.pause = !mute;
 
         mute = !mute;
+
+        PlayerPrefs.SetInt("Mute", mute ? 1 : 0);
+
+        Debug.Log("mute : " + mute);
     }
 
     private void updateHearts()
