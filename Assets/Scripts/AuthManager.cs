@@ -73,18 +73,6 @@ public class AuthManager : MonoBehaviour
         }
     }
 
-    public void LogoutButton()
-    {
-        if (auth != null)
-        {
-            auth.SignOut();
-            Debug.Log("User logged out.");
-        }
-
-        UIManager.instance.Cross();
-        confirmLoginText.text = "";
-    }
-
     private void InitializeFirebase()
     {
         Debug.Log("Setting up Firebase Auth");
@@ -116,8 +104,12 @@ public class AuthManager : MonoBehaviour
         {
             //If there are errors handle them
             Debug.LogWarning(message: $"Failed to register task with {LoginTask.Exception}");
+            Debug.Log(message: $"Failed to register task with {LoginTask.Exception}");
             FirebaseException firebaseEx = LoginTask.Exception.GetBaseException() as FirebaseException;
+            Debug.Log("Firebase exception : " + firebaseEx.Message);
             AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
+
+            Debug.Log("Error : " + errorCode);
 
             string message = "Login Failed!";
             switch (errorCode)
@@ -149,10 +141,10 @@ public class AuthManager : MonoBehaviour
             usernameText.text = "Username : " + auth.CurrentUser.DisplayName;
             warningLoginText.text = "";
             confirmLoginText.text = "Logged In";
-        }
 
-        UIManager.instance.Cross();
-        UIManager.instance.profileUI.SetActive(true);
+            UIManager.instance.Cross();
+            UIManager.instance.profileUI.SetActive(true);
+        }
     }
 
     private IEnumerator Register(string _email, string _password, string _username)
@@ -233,5 +225,18 @@ public class AuthManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void LogoutButton()
+    {
+        if (auth != null)
+        {
+            auth.SignOut();
+            Debug.Log("User logged out.");
+        }
+
+        UIManager.instance.Cross();
+        confirmLoginText.text = "";
+        usernameText.text = "";
     }
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "267582782501",
+    "project_id": "helix-jump-bb717",
+    "storage_bucket": "helix-jump-bb717.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:267582782501:android:a0e844f204a24e65f0d3cc",
+        "android_client_info": {
+          "package_name": "com.SallewStudios.HelixJump"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7P-ChmrOisV8UacM85Yrixm4dHT8W-HQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
