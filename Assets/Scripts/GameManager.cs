@@ -129,7 +129,9 @@ public class GameManager : MonoBehaviour
 
     public void Win() 
     {
-        PlayerPrefs.SetInt("TotalCoins", PlayerPrefs.GetInt("TotalCoins") + CoinsManager.instance.score);
+        int totalCoins = PlayerPrefs.GetInt("TotalCoins") + CoinsManager.instance.score;
+        PlayerPrefs.SetInt("TotalCoins", totalCoins);
+        FirebaseManager.instance.UpdateCoins(totalCoins);
         levelWinPanel.SetActive(true);
         totalCoinText.text = PlayerPrefs.GetInt("TotalCoins").ToString();
         levelWin = true;

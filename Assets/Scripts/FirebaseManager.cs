@@ -8,11 +8,14 @@ using System.Threading.Tasks;
 
 public class FirebaseManager : MonoBehaviour
 {
+    public static FirebaseManager instance;
+
     //Firebase variables
     [Header("Firebase")]
     public DependencyStatus dependencyStatus;
     public FirebaseAuth auth;
     public FirebaseUser User;
+    public DatabaseReference DBreference;
 
     //Login variables
     [Header("Login")]
@@ -58,6 +61,18 @@ public class FirebaseManager : MonoBehaviour
             }
         });*/
 
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); // Prevents destruction on scene load
+        }
+        else 
+        {
+            Debug.Log("Instance already exists, destroying object!");
+            Destroy(gameObject);
+            return;
+        }
+
         dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync();
         if (dependencyStatus == DependencyStatus.Available)
         {
@@ -67,6 +82,7 @@ public class FirebaseManager : MonoBehaviour
         {
             Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
         }
+
     }
 
     void Start()
@@ -88,6 +104,7 @@ public class FirebaseManager : MonoBehaviour
         Debug.Log("Setting up Firebase Auth");
         //Set the authentication instance object
         auth = FirebaseAuth.DefaultInstance;
+        DBreference = FirebaseDatabase.DefaultInstance.RootReference;
     }
 
     //Function for the login button
@@ -256,4 +273,33 @@ public class FirebaseManager : MonoBehaviour
         confirmLoginText.text = "";
         usernameText.text = "";
     }
+
+    public void UpdateCoins(int coins)
+    {
+        StartCoroutine(UpdateCoinsDatabase(coins));
+    }
+
+    private IEnumerator UpdateCoinsDatabase(int _coins)
+    {
+        if (User == null)
+        {
+            //Debug.LogError("User is null. Cannot update coins.");
+            //yield break;
+            User = auth.CurrentUser;
+        }
+
+        Task DBTask = DBreference.Child("users").Child(User.UserId).Child("coins").SetValueAsync(_coins);
+
+        yield return new WaitUntil(() => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning($"Failed to update coins: {DBTask.Exception}");
+        }
+        else
+        {
+            Debug.Log("Coins successfully updated in the database.");
+        }
+    }
+
 }
