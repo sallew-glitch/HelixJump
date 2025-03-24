@@ -11,7 +11,7 @@ public class CoinsManager : MonoBehaviour
     public static CoinsManager instance;
     public float rotationSpeed = 45f;
 
-    private int score = 0;
+    public int score = 0;
 
     public TextMeshProUGUI scoreText;
 

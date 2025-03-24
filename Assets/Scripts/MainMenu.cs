@@ -1,6 +1,7 @@
 using Firebase.Auth;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -17,6 +18,8 @@ public class MainMenu : MonoBehaviour
     public GameObject LoginPanel;
     public GameObject MainMenuPanel;
     public GameObject ProfilePanel;
+
+    public TMP_Text totalCoins;
 
     public FirebaseAuth auth;
 
@@ -39,6 +42,8 @@ public class MainMenu : MonoBehaviour
         {
             volume.image.sprite = unmuted;
         }
+
+        totalCoins.text = PlayerPrefs.GetInt("TotalCoins").ToString();
     }
 
     public void PlayGame()

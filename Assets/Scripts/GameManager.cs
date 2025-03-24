@@ -69,6 +69,7 @@ public class GameManager : MonoBehaviour
         levelWin = false;
         currentLives = 3;
         healthText.text = currentLives.ToString();
+        Debug.Log("Total Coins : " + PlayerPrefs.GetInt("TotalCoins"));
     }
 
     private void Update()
@@ -135,6 +136,7 @@ public class GameManager : MonoBehaviour
     public void NextLevel()
     {
         PlayerPrefs.SetInt("CurrentLevelIndex", currentLevelIndex + 1);
+        PlayerPrefs.SetInt("TotalCoins", PlayerPrefs.GetInt("TotalCoins") + CoinsManager.instance.score);
         SceneManager.LoadScene(1);
     }
 
