@@ -1,11 +1,12 @@
 using System.Collections;
 using UnityEngine;
 using Firebase;
+using Firebase.Database;
 using Firebase.Auth;
 using TMPro;
 using System.Threading.Tasks;
 
-public class AuthManager : MonoBehaviour
+public class FirebaseManager : MonoBehaviour
 {
     //Firebase variables
     [Header("Firebase")]
@@ -30,6 +31,15 @@ public class AuthManager : MonoBehaviour
 
     [Header("Profile")]
     public TMP_Text usernameText;
+
+    //User Data variables
+    [Header("UserData")]
+    public TMP_InputField usernameField;
+    public TMP_InputField xpField;
+    public TMP_InputField killsField;
+    public TMP_InputField deathsField;
+    public GameObject scoreElement;
+    public Transform scoreboardContent;
 
     async void Awake()
     {

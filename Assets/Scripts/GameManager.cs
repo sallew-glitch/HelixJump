@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
 
     public List<Image> hearts;
 
-    //public Image heart;
     public Sprite heartFill;
     public Sprite heartEmpty;
 
@@ -41,6 +40,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI mistakeText;
 
     public Slider progressBar;
+
+    public TMP_Text totalCoinText;
 
     private void Awake()
     {
@@ -128,7 +129,9 @@ public class GameManager : MonoBehaviour
 
     public void Win() 
     {
+        PlayerPrefs.SetInt("TotalCoins", PlayerPrefs.GetInt("TotalCoins") + CoinsManager.instance.score);
         levelWinPanel.SetActive(true);
+        totalCoinText.text = PlayerPrefs.GetInt("TotalCoins").ToString();
         levelWin = true;
         audioManager.Play("LevelWin");
     }
@@ -136,7 +139,6 @@ public class GameManager : MonoBehaviour
     public void NextLevel()
     {
         PlayerPrefs.SetInt("CurrentLevelIndex", currentLevelIndex + 1);
-        PlayerPrefs.SetInt("TotalCoins", PlayerPrefs.GetInt("TotalCoins") + CoinsManager.instance.score);
         SceneManager.LoadScene(1);
     }
 

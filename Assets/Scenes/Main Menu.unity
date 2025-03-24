@@ -228,6 +228,7 @@ MonoBehaviour:
   LoginPanel: {fileID: 1595199735}
   MainMenuPanel: {fileID: 1001624294}
   ProfilePanel: {fileID: 901171668}
+  totalCoins: {fileID: 1481508760}
 --- !u!114 &27154722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4216,7 +4217,7 @@ GameObject:
   - component: {fileID: 1417949309}
   - component: {fileID: 1417949308}
   m_Layer: 0
-  m_Name: AuthManager
+  m_Name: FirebaseManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
