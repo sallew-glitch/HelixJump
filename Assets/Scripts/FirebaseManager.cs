@@ -152,6 +152,9 @@ public class FirebaseManager : MonoBehaviour
             warningLoginText.text = "";
             confirmLoginText.text = "Logged In";
 
+            emailLoginField.text = "";
+            passwordLoginField.text = "";
+
             UIManager.instance.Cross();
             UIManager.instance.profileUI.SetActive(true);
         }
@@ -229,6 +232,10 @@ public class FirebaseManager : MonoBehaviour
                     {
                         //Username is now set
                         //Now return to login screen
+                        usernameRegisterField.text = "";
+                        emailRegisterField.text = "";
+                        passwordRegisterField.text = "";
+                        passwordRegisterVerifyField.text = "";
                         UIManager.instance.LoginScreen();
                         warningRegisterText.text = "";
                     }
