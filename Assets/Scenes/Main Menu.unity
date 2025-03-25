@@ -228,6 +228,8 @@ MonoBehaviour:
   LoginPanel: {fileID: 1595199735}
   MainMenuPanel: {fileID: 1001624294}
   ProfilePanel: {fileID: 901171668}
+  loginButton: {fileID: 120391925}
+  registerButton: {fileID: 1686786817}
   totalCoins: {fileID: 1481508760}
 --- !u!114 &27154722
 MonoBehaviour:
@@ -1574,7 +1576,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &519251516
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4246,6 +4248,12 @@ MonoBehaviour:
   passwordRegisterVerifyField: {fileID: 1216081202}
   warningRegisterText: {fileID: 1528636377}
   usernameText: {fileID: 2016647417}
+  usernameField: {fileID: 0}
+  xpField: {fileID: 0}
+  killsField: {fileID: 0}
+  deathsField: {fileID: 0}
+  scoreElement: {fileID: 0}
+  scoreboardContent: {fileID: 0}
 --- !u!4 &1417949309
 Transform:
   m_ObjectHideFlags: 0
@@ -4984,7 +4992,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1595199736
 RectTransform:
   m_ObjectHideFlags: 0

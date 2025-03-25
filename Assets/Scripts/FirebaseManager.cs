@@ -6,6 +6,8 @@ using Firebase.Auth;
 using TMPro;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using System.Runtime.CompilerServices;
 
 public class FirebaseManager : MonoBehaviour
 {
@@ -38,15 +40,6 @@ public class FirebaseManager : MonoBehaviour
     [Header("Profile")]
     public TMP_Text usernameText;
 
-    //User Data variables
-    [Header("UserData")]
-    public TMP_InputField usernameField;
-    public TMP_InputField xpField;
-    public TMP_InputField killsField;
-    public TMP_InputField deathsField;
-    public GameObject scoreElement;
-    public Transform scoreboardContent;
-
     async void Awake()
     {
 
@@ -77,8 +70,12 @@ public class FirebaseManager : MonoBehaviour
 
     void Start()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
         auth = FirebaseAuth.DefaultInstance;
         DBreference = FirebaseDatabase.DefaultInstance.RootReference;
+
+        Debug.Log("FirebaseManager instance: " + instance.gameObject.name);
 
         if (auth.CurrentUser != null)
         {
@@ -90,6 +87,50 @@ public class FirebaseManager : MonoBehaviour
             Debug.Log("No user is logged in.");
         }
     }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        AssignUIElements();  // This ensures UI elements are assigned after the scene loads
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;  // Clean up event listener
+    }
+
+    public void AssignUIElements()
+    {
+
+        Transform uiParent = GameObject.Find("Canvas").transform;
+
+        if (uiParent == null)
+        {
+            Debug.LogError("UI Parent is not assigned!");
+            return;
+        }
+
+        Transform loginPanel = uiParent.Find("LoginPanel").transform;
+
+        emailLoginField = loginPanel.Find("Login Email")?.GetComponent<TMP_InputField>();
+        passwordLoginField = loginPanel.Find("Login Password")?.GetComponent<TMP_InputField>();
+        warningLoginText = loginPanel.Find("Login Warning Text")?.GetComponent<TMP_Text>();
+        confirmLoginText = loginPanel.Find("Login Warning Text").transform.Find("Login Confirm Text")?.GetComponent<TMP_Text>();
+
+        Transform registerPanel = uiParent.Find("RegisterPanel").transform;
+
+        usernameRegisterField = registerPanel.Find("Register Username")?.GetComponent<TMP_InputField>();
+        emailRegisterField = registerPanel.Find("Register Email")?.GetComponent<TMP_InputField>();
+        passwordRegisterField = registerPanel.Find("Register Password")?.GetComponent<TMP_InputField>();
+        passwordRegisterVerifyField = registerPanel.Find("Register Confirm Password")?.GetComponent<TMP_InputField>();
+        warningRegisterText = registerPanel.Find("Register Warning Text")?.GetComponent<TMP_Text>();
+
+        Transform profilePanel = uiParent.Find("ProfilePanel").transform;
+
+        usernameText = profilePanel.Find("Profile Username Text")?.GetComponent<TMP_Text>();
+
+        Debug.Log("UI Elements Reassigned!");
+    }
+
 
     private IEnumerator GetUsernameFromDatabase()
     {
@@ -454,7 +495,7 @@ public class FirebaseManager : MonoBehaviour
             {
                 if (i < gameManager.names.Count && i < gameManager.numCoins.Count) // Ensure no out-of-bounds error
                 {
-                    gameManager.names[i].text = topPlayers[i].username;
+                    gameManager.names[i].text = (i + 1) + "    " + topPlayers[i].username;
                     gameManager.numCoins[i].text = topPlayers[i].coins.ToString();
 
                     // Get the parent GameObject and activate it

@@ -19,6 +19,10 @@ public class MainMenu : MonoBehaviour
     public GameObject MainMenuPanel;
     public GameObject ProfilePanel;
 
+    public Button loginButton;
+    public Button registerButton;
+    public Button logoutButton;
+
     public TMP_Text totalCoins;
 
     public FirebaseAuth auth;
@@ -28,32 +32,42 @@ public class MainMenu : MonoBehaviour
         mute = PlayerPrefs.GetInt("Mute") == 1 ? true : false;
     }
 
+    private IEnumerator AssignButtonListeners()
+    {
+        // Wait until FirebaseManager is fully initialized
+        while (FirebaseManager.instance == null)
+        {
+            Debug.Log("Waiting for FirebaseManager...");
+            yield return null;
+        }
+
+        Debug.Log("FirebaseManager is ready!");
+
+        FirebaseManager.instance.GetCoins();
+
+        loginButton.onClick.RemoveAllListeners();
+        loginButton.onClick.AddListener(() => FirebaseManager.instance.LoginButton());
+
+        logoutButton.onClick.RemoveAllListeners();
+        logoutButton.onClick.AddListener(() => FirebaseManager.instance.LogoutButton());
+
+        registerButton.onClick.RemoveAllListeners();
+        registerButton.onClick.AddListener(() => FirebaseManager.instance.RegisterButton());
+    }
+
     private void Start()
     {
         mute = PlayerPrefs.GetInt("Mute") == 1 ? true : false;
 
         Debug.Log("mute : " + mute);
 
-        if (mute)
-        {
-            volume.image.sprite = muted;
-        }
-        else
-        {
-            volume.image.sprite = unmuted;
-        }
-
+        volume.image.sprite = mute ? muted : unmuted;
         totalCoins.text = PlayerPrefs.GetInt("TotalCoins").ToString();
 
-        if (FirebaseManager.instance != null)
-        {
-            FirebaseManager.instance.GetCoins();
-        }
-        else
-        {
-            Debug.LogError("FirebaseManager instance is null.");
-        }
+        // Start the coroutine to safely assign button listeners
+        StartCoroutine(AssignButtonListeners());
     }
+
 
     public void PlayGame()
     {

@@ -169,6 +169,7 @@ public class GameManager : MonoBehaviour
     public void GotoMainMenu()
     {
         SceneManager.LoadSceneAsync(0);
+        FirebaseManager.instance.AssignUIElements();
     }
 
     public void MuteUnmute()
