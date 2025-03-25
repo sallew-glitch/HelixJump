@@ -41,7 +41,8 @@ public class GameManager : MonoBehaviour
 
     public Slider progressBar;
 
-    public TMP_Text totalCoinText;
+    public List<TextMeshProUGUI> names;
+    public List<TextMeshProUGUI> numCoins;
 
     private void Awake()
     {
@@ -114,13 +115,10 @@ public class GameManager : MonoBehaviour
     IEnumerator Waiter()
     {
         mistakeText.text = "3";
-        Debug.Log("3");
         yield return new WaitForSecondsRealtime(1);
         mistakeText.text = "2";
-        Debug.Log("2");
         yield return new WaitForSecondsRealtime(1);
         mistakeText.text = "1";
-        Debug.Log("1");
         yield return new WaitForSecondsRealtime(1);
         Time.timeScale = 1;
         mistakePanel.SetActive(false);
@@ -133,9 +131,9 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("TotalCoins", totalCoins);
         FirebaseManager.instance.UpdateCoins(totalCoins);
         levelWinPanel.SetActive(true);
-        totalCoinText.text = PlayerPrefs.GetInt("TotalCoins").ToString();
         levelWin = true;
         audioManager.Play("LevelWin");
+        FirebaseManager.instance.GetLeaderboardData();
     }
 
     public void NextLevel()

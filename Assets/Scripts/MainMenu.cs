@@ -44,6 +44,15 @@ public class MainMenu : MonoBehaviour
         }
 
         totalCoins.text = PlayerPrefs.GetInt("TotalCoins").ToString();
+
+        if (FirebaseManager.instance != null)
+        {
+            FirebaseManager.instance.GetCoins();
+        }
+        else
+        {
+            Debug.LogError("FirebaseManager instance is null.");
+        }
     }
 
     public void PlayGame()

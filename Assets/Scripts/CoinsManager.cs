@@ -87,7 +87,6 @@ public class CoinsManager : MonoBehaviour
 
                 float trueZRotation = (eulerRotation.y <= 180) ? eulerRotation.y : eulerRotation.y - 360;
                 trueZRotation += 67.5f;
-                Debug.Log("trueZ " + trueZRotation);
 
                 float distance = 2.2f; // Get distance from center
                 Quaternion finalRotation = Quaternion.Euler(-90, 0, trueZRotation); // Reconstruct rotation

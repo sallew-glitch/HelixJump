@@ -5,10 +5,13 @@ using Firebase.Database;
 using Firebase.Auth;
 using TMPro;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 public class FirebaseManager : MonoBehaviour
 {
     public static FirebaseManager instance;
+
+    long coins;
 
     //Firebase variables
     [Header("Firebase")]
@@ -46,20 +49,6 @@ public class FirebaseManager : MonoBehaviour
 
     async void Awake()
     {
-        //Check that all of the necessary dependencies for Firebase are present on the system
-        /*FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
-        {
-            dependencyStatus = task.Result;
-            if (dependencyStatus == DependencyStatus.Available)
-            {
-                //If they are avalible Initialize Firebase
-                InitializeFirebase();
-            }
-            else
-            {
-                Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
-            }
-        });*/
 
         if (instance == null)
         {
@@ -73,6 +62,7 @@ public class FirebaseManager : MonoBehaviour
             return;
         }
 
+        //Check that all of the necessary dependencies for Firebase are present on the system
         dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync();
         if (dependencyStatus == DependencyStatus.Available)
         {
@@ -88,14 +78,56 @@ public class FirebaseManager : MonoBehaviour
     void Start()
     {
         auth = FirebaseAuth.DefaultInstance;
+        DBreference = FirebaseDatabase.DefaultInstance.RootReference;
+
         if (auth.CurrentUser != null)
         {
             Debug.Log("User is still logged in: " + auth.CurrentUser.Email);
-            usernameText.text = "Username : " + auth.CurrentUser.DisplayName;
+            StartCoroutine(GetUsernameFromDatabase());
         }
         else
         {
             Debug.Log("No user is logged in.");
+        }
+    }
+
+    private IEnumerator GetUsernameFromDatabase()
+    {
+
+        if (auth.CurrentUser == null)
+        {
+            Debug.LogWarning("User is null. Cannot fetch username.");
+            usernameText.text = "Username : Not Logged In";
+            yield break;
+        }
+
+        if (DBreference == null)
+        {
+            Debug.LogError("DBreference is null! Ensure Firebase Database is initialized.");
+            yield break;
+        }
+
+        string userId = auth.CurrentUser.UserId;
+        Debug.Log("Fetching username for User ID: " + userId);
+
+        Task<DataSnapshot> DBTask = DBreference.Child("users").Child(userId).Child("username").GetValueAsync();
+
+        yield return new WaitUntil(() => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning($"Failed to retrieve username: {DBTask.Exception}");
+            usernameText.text = "Username : Error";
+        }
+        else if (DBTask.Result.Exists && DBTask.Result.Value != null)
+        {
+            string username = DBTask.Result.Value.ToString();
+            usernameText.text = "Username : " + username;
+        }
+        else
+        {
+            Debug.LogWarning("Username not found in database.");
+            usernameText.text = "Username : Not Set";
         }
     }
 
@@ -165,7 +197,6 @@ public class FirebaseManager : MonoBehaviour
             //Now get the result
             User = LoginTask.Result.User;
             Debug.LogFormat("User signed in successfully: {0} ({1})", User.DisplayName, User.Email);
-            usernameText.text = "Username : " + auth.CurrentUser.DisplayName;
             warningLoginText.text = "";
             confirmLoginText.text = "Logged In";
 
@@ -173,6 +204,7 @@ public class FirebaseManager : MonoBehaviour
             passwordLoginField.text = "";
 
             UIManager.instance.Cross();
+            StartCoroutine(GetUsernameFromDatabase());
             UIManager.instance.profileUI.SetActive(true);
         }
     }
@@ -248,6 +280,7 @@ public class FirebaseManager : MonoBehaviour
                     else
                     {
                         //Username is now set
+                        DBreference.Child("users").Child(User.UserId).Child("username").SetValueAsync(_username);
                         //Now return to login screen
                         usernameRegisterField.text = "";
                         emailRegisterField.text = "";
@@ -283,9 +316,12 @@ public class FirebaseManager : MonoBehaviour
     {
         if (User == null)
         {
-            //Debug.LogError("User is null. Cannot update coins.");
-            //yield break;
             User = auth.CurrentUser;
+            if (User == null)
+            {
+                Debug.LogError("User is still null. Cannot set coins.");
+                yield break;
+            }
         }
 
         Task DBTask = DBreference.Child("users").Child(User.UserId).Child("coins").SetValueAsync(_coins);
@@ -299,6 +335,139 @@ public class FirebaseManager : MonoBehaviour
         else
         {
             Debug.Log("Coins successfully updated in the database.");
+        }
+    }
+
+    public void GetCoins()
+    {
+        StartCoroutine(GetCoinsDatabase());
+    }
+
+    private IEnumerator GetCoinsDatabase()
+    {
+        while (auth == null)
+        {
+            Debug.LogWarning("Waiting for Firebase auth to initialize...");
+            yield return null;
+        }
+
+        if (User == null)
+        {
+            User = auth.CurrentUser;
+            if (User == null)
+            {
+                Debug.LogError("User is still null. Cannot retrieve coins.");
+                yield break;
+            }
+        }
+
+        Task<DataSnapshot> DBTask = DBreference.Child("users").Child(User.UserId).Child("coins").GetValueAsync();
+
+        yield return new WaitUntil(() => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning($"Failed to retrieve coins: {DBTask.Exception}");
+        }
+        else if (DBTask.Result.Exists)
+        {
+            coins = (long)DBTask.Result.Value;
+            Debug.Log($"Coins: {coins}");
+        }
+        else
+        {
+            Debug.Log("No coins data found for the user.");
+        }
+    }
+
+    public void GetLeaderboardData()
+    {
+        StartCoroutine(GetTop5Coins());
+    }
+
+    private IEnumerator GetTop5Coins()
+    {
+        while (auth == null)
+        {
+            Debug.LogWarning("Waiting for Firebase auth to initialize...");
+            yield return null;
+        }
+
+        if (User == null)
+        {
+            User = auth.CurrentUser;
+            if (User == null)
+            {
+                Debug.LogError("User is still null. Cannot retrieve leaderboard data.");
+                yield break;
+            }
+        }
+
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        if (gameManager == null)
+        {
+            Debug.LogError("GameManager not found in the scene.");
+            yield break;
+        }
+
+        Task<DataSnapshot> DBTask = DBreference.Child("users")
+            .OrderByChild("coins")
+            .LimitToLast(5) // Get top 5 users with the highest coins
+            .GetValueAsync();
+
+        yield return new WaitUntil(() => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning($"Failed to retrieve top 5 coins: {DBTask.Exception}");
+        }
+        else
+        {
+            DataSnapshot snapshot = DBTask.Result;
+            List<(string username, long coins)> topPlayers = new List<(string, long)>();
+
+            foreach (DataSnapshot user in snapshot.Children)
+            {
+                string userId = user.Key;
+                long coins = user.Child("coins").Value != null ? (long)user.Child("coins").Value : 0;
+
+                // Use stored username or fallback to DisplayName if available
+                string username = user.Child("username").Value?.ToString();
+                if (string.IsNullOrEmpty(username) && auth.CurrentUser != null && auth.CurrentUser.UserId == userId)
+                {
+                    username = auth.CurrentUser.DisplayName ?? "Unknown";
+                }
+                else
+                {
+                    username = username ?? "Unknown";
+                }
+
+                topPlayers.Add((username, coins));
+            }
+
+            // Sort in descending order (Firebase returns ascending by default)
+            topPlayers.Sort((a, b) => b.coins.CompareTo(a.coins));
+
+            Debug.Log("Top 5 collectors:");
+
+            for (int i = 0; i < topPlayers.Count; i++)
+            {
+                if (i < gameManager.names.Count && i < gameManager.numCoins.Count) // Ensure no out-of-bounds error
+                {
+                    gameManager.names[i].text = topPlayers[i].username;
+                    gameManager.numCoins[i].text = topPlayers[i].coins.ToString();
+
+                    // Get the parent GameObject and activate it
+                    Transform parentTransform = gameManager.numCoins[i].transform.parent;
+                    if (parentTransform != null)
+                    {
+                        parentTransform.gameObject.SetActive(true);
+                    }
+
+                }
+
+                Debug.Log($"Username: {topPlayers[i].username}, Coins: {topPlayers[i].coins}");
+            }
         }
     }
 
