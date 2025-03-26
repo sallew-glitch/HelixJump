@@ -128,6 +128,8 @@ public class FirebaseManager : MonoBehaviour
 
         usernameText = profilePanel.Find("Profile Username Text")?.GetComponent<TMP_Text>();
 
+        StartCoroutine(GetUsernameFromDatabase());
+
         Debug.Log("UI Elements Reassigned!");
     }
 

@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
-
     AudioManager audioManager;
 
     public static bool gameOver;
@@ -31,14 +29,14 @@ public class GameManager : MonoBehaviour
     public Sprite heartEmpty;
 
     public static int currentLives;
-    public static int maxLives = 5;
+    //public static int maxLives = 5;
 
     public static int currentLevelIndex;
     public static int noOfPassingRings;
 
     public TextMeshProUGUI currentLevelText;
     public TextMeshProUGUI nextLevelText;
-    public TextMeshProUGUI healthText;
+    //public TextMeshProUGUI healthText;
     public TextMeshProUGUI mistakeText;
 
     public Slider progressBar;
@@ -48,17 +46,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-
-        if (instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-
         currentLevelIndex = PlayerPrefs.GetInt("CurrentLevelIndex", 1);
         audioManager = FindObjectOfType<AudioManager>();
     }
@@ -83,7 +70,7 @@ public class GameManager : MonoBehaviour
         gameOver = false;
         levelWin = false;
         currentLives = 3;
-        healthText.text = currentLives.ToString();
+        //healthText.text = currentLives.ToString();
         Debug.Log("Total Coins : " + PlayerPrefs.GetInt("TotalCoins"));
     }
 
@@ -110,7 +97,7 @@ public class GameManager : MonoBehaviour
     public void Hit()
     {
         addOrReduceLives(-1);
-        healthText.text = currentLives.ToString();
+        //healthText.text = currentLives.ToString();
 
         if (currentLives != 0)
         {

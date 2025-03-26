@@ -112,7 +112,7 @@ public class PowerupManager : MonoBehaviour
     public void AddLife()
     {
         Debug.Log("Add Life");
-        GameManager.instance.addOrReduceLives(1);
+        FindObjectOfType<GameManager>().addOrReduceLives(1);
         Debug.Log("Lives : " + GameManager.currentLives);
     }
 }

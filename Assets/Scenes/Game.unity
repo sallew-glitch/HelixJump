@@ -1143,6 +1143,12 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: Powerup
+    clip: {fileID: 8300000, guid: 367f08a029ab9fd47bf242ab4ea37dcb, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!4 &208379700
 Transform:
   m_ObjectHideFlags: 0
@@ -4775,6 +4781,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1171758275}
   m_CullTransparentMesh: 1
+--- !u!1 &1192384616
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1192384618}
+  - component: {fileID: 1192384617}
+  m_Layer: 0
+  m_Name: PowerupManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1192384617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192384616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaeb65eb39968724eaa4e040cb54f825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 90
+  heart: {fileID: 919132149155446097, guid: 9aefd35fac7ca374383f261025816c88, type: 3}
+--- !u!4 &1192384618
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192384616}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 94.39693, y: 756.1852, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1218905475
 GameObject:
   m_ObjectHideFlags: 0
@@ -4895,7 +4946,6 @@ MonoBehaviour:
   heartEmpty: {fileID: 21300000, guid: 807cf8b50f52eda42bd8e8446ff72a38, type: 3}
   currentLevelText: {fileID: 448197169}
   nextLevelText: {fileID: 556260713}
-  healthText: {fileID: 1531839887}
   mistakeText: {fileID: 1251786726}
   progressBar: {fileID: 295938569}
   names:
