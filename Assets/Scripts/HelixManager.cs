@@ -43,6 +43,10 @@ public class HelixManager : MonoBehaviour
         if (choice)
             CoinsManager.instance.SpawnCoins(newRing, yPos);
 
+        if (choice)
+            //if (Random.Range(0, 5) == 1 ? true : false)
+                PowerupManager.instance.SpawnHearts(newRing, yPos);
+
         yPos -= ringDistance;
         newRing.transform.parent = transform;
     }

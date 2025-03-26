@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
     AudioManager audioManager;
 
     public static bool gameOver;
@@ -46,6 +48,17 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+
+        if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
         currentLevelIndex = PlayerPrefs.GetInt("CurrentLevelIndex", 1);
         audioManager = FindObjectOfType<AudioManager>();
     }
@@ -96,7 +109,7 @@ public class GameManager : MonoBehaviour
 
     public void Hit()
     {
-        currentLives--;
+        addOrReduceLives(-1);
         healthText.text = currentLives.ToString();
 
         if (currentLives != 0)
@@ -108,8 +121,6 @@ public class GameManager : MonoBehaviour
 
             audioManager.Play("Mistake");
         }
-
-        updateHearts();
     }
 
     IEnumerator Waiter()
@@ -192,7 +203,14 @@ public class GameManager : MonoBehaviour
         Debug.Log("mute : " + mute);
     }
 
-    private void updateHearts()
+    public void addOrReduceLives(int n)
+    {
+        currentLives = Mathf.Min(3, currentLives + n);
+
+        updateHearts();
+    }
+
+    public void updateHearts()
     {
         for (int i = 0; i < hearts.Count; i++)
         {

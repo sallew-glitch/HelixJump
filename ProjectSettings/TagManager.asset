@@ -8,6 +8,7 @@ TagManager:
   - Coin
   - Canvas
   - GameManager
+  - Heart
   layers:
   - Default
   - TransparentFX

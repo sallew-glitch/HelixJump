@@ -230,6 +230,7 @@ MonoBehaviour:
   ProfilePanel: {fileID: 901171668}
   loginButton: {fileID: 120391925}
   registerButton: {fileID: 1686786817}
+  logoutButton: {fileID: 233680072}
   totalCoins: {fileID: 1481508760}
 --- !u!114 &27154722
 MonoBehaviour:
@@ -1576,7 +1577,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &519251516
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1617,7 +1618,7 @@ GameObject:
   - component: {fileID: 543483676}
   - component: {fileID: 543483675}
   m_Layer: 5
-  m_Name: Confirm Text
+  m_Name: Login Confirm Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2428,7 +2429,7 @@ GameObject:
   - component: {fileID: 947254987}
   - component: {fileID: 947254986}
   m_Layer: 5
-  m_Name: Username
+  m_Name: Register Username
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2833,7 +2834,7 @@ GameObject:
   - component: {fileID: 993307899}
   - component: {fileID: 993307898}
   m_Layer: 5
-  m_Name: Password
+  m_Name: Login Password
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3437,7 +3438,7 @@ GameObject:
   - component: {fileID: 1216081203}
   - component: {fileID: 1216081202}
   m_Layer: 5
-  m_Name: ConfirmPassword
+  m_Name: Register Confirm Password
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4046,7 +4047,7 @@ GameObject:
   - component: {fileID: 1395756151}
   - component: {fileID: 1395756150}
   m_Layer: 5
-  m_Name: Password
+  m_Name: Register Password
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4248,12 +4249,6 @@ MonoBehaviour:
   passwordRegisterVerifyField: {fileID: 1216081202}
   warningRegisterText: {fileID: 1528636377}
   usernameText: {fileID: 2016647417}
-  usernameField: {fileID: 0}
-  xpField: {fileID: 0}
-  killsField: {fileID: 0}
-  deathsField: {fileID: 0}
-  scoreElement: {fileID: 0}
-  scoreboardContent: {fileID: 0}
 --- !u!4 &1417949309
 Transform:
   m_ObjectHideFlags: 0
@@ -4568,7 +4563,7 @@ GameObject:
   - component: {fileID: 1528636378}
   - component: {fileID: 1528636377}
   m_Layer: 5
-  m_Name: Warning Text
+  m_Name: Register Warning Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4992,7 +4987,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1595199736
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5993,7 +5988,7 @@ GameObject:
   - component: {fileID: 1890676668}
   - component: {fileID: 1890676667}
   m_Layer: 5
-  m_Name: Warning Text
+  m_Name: Login Warning Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6129,7 +6124,7 @@ GameObject:
   - component: {fileID: 1920612657}
   - component: {fileID: 1920612656}
   m_Layer: 5
-  m_Name: Email
+  m_Name: Register Email
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6510,7 +6505,7 @@ GameObject:
   - component: {fileID: 2016647418}
   - component: {fileID: 2016647417}
   m_Layer: 5
-  m_Name: Username Text
+  m_Name: Profile Username Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6645,7 +6640,7 @@ GameObject:
   - component: {fileID: 2039505783}
   - component: {fileID: 2039505782}
   m_Layer: 5
-  m_Name: Email
+  m_Name: Login Email
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
