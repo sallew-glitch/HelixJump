@@ -16,6 +16,7 @@ public class CoinsManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
 
     public GameObject coin;
+    public Material coinSilverMaterial;
 
     // Start is called before the first frame update
     void Awake()
@@ -133,9 +134,9 @@ public class CoinsManager : MonoBehaviour
         }
     }
 
-    public void IncreaseScore()
+    public void IncreaseScore(int value)
     {
-        score++; // Increase counter
+        score = score + value; // Increase counter
         Debug.Log("Coins Collected: " + score);
         scoreText.text = score.ToString();
     }

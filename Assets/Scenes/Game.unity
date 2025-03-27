@@ -6341,6 +6341,7 @@ MonoBehaviour:
   score: 0
   scoreText: {fileID: 25031128}
   coin: {fileID: 100000, guid: b9565bd62bf9df84aa6c44e1b5cb67b0, type: 3}
+  coinSilverMaterial: {fileID: 2100000, guid: bb2fa1c45ce33aa4e9d33b3ccc518919, type: 2}
 --- !u!4 &1660552290
 Transform:
   m_ObjectHideFlags: 0

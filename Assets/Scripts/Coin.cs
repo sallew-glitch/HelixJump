@@ -11,6 +11,8 @@ public class Coin : MonoBehaviour
 
     AudioManager audioManager;
 
+    public int value = 2;
+
     public float riseHeight = 0.5f;  // Height to rise before disappearing
     public float spinSpeedMultiplier = 3f; // Increases rotation speed while fading
 
@@ -19,6 +21,12 @@ public class Coin : MonoBehaviour
         coinRenderer = GetComponent<Renderer>();
 
         audioManager = FindObjectOfType<AudioManager>();
+
+        if (Random.Range(0, 2) == 1 ? true : false)
+        {
+            coinRenderer.material = CoinsManager.instance.coinSilverMaterial;
+            value = 1;
+        }
 
         // Clone the material so each coin has a separate instance
         coinMaterial = new Material(coinRenderer.material);
@@ -39,7 +47,7 @@ public class Coin : MonoBehaviour
     {
         if (other.CompareTag("Player")) // If ball (player) hits the coin
         {
-            CoinsManager.instance.IncreaseScore();
+            CoinsManager.instance.IncreaseScore(value);
             coinCollider.enabled = false; // Disable further collisions
 
             audioManager.Play("Coin Pick");
